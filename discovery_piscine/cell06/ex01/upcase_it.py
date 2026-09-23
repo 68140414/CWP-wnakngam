@@ -1,6 +1,6 @@
 """Upcase it"""
-def upcase_it(str):
+def upcase_it(string):
     """Return the string in uppercase"""
-    return str.upper()
+    return string.upper()
 
 print(upcase_it("hello"))
