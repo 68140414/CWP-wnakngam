@@ -3,11 +3,11 @@ from checkmate import checkmate
 def main():
     """Main function"""
     board = """\
-....K
-.....
-.....
-....Q
-.....\
+   xxxxx  
+xKxxxxxR
+   xxxxx
+   xxxxx
+   xxxxx\
 """
     checkmate(board)
 

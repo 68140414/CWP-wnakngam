@@ -1,23 +1,44 @@
 """Checkmate"""
 def checkmate(board):
     """Check function"""
-    board_list = board.splitlines()
-    board_size = len(board_list) # Because board is always square so we can use board_size for both row and col
-    is_checked = False
-    for r in range(board_size):
-        for c in range(board_size):
-            if board_list[r][c] == "R":
-                is_checked = is_rook_checking(board_list, r, c, board_size)
-            elif board_list[r][c] == "B":
-                is_checked = is_bishop_checking(board_list, r, c, board_size)
-            elif board_list[r][c] == "Q":
-                is_checked = is_queen_checking(board_list, r, c, board_size)
-            elif board_list[r][c] == "P":
-                is_checked = is_pawn_checking(board_list, r, c, board_size)
-            if is_checked:
-                print("Success")
+    if isinstance(board, str) and board != "":
+        board_list = board.splitlines() #board.split('\n')
+
+        # Check if Square
+        size_row = len(board_list)
+        for r in board_list:
+            r = r.strip()
+            if len(r) != size_row:
+                print("Error!")
                 return
-    print("Failed")
+
+        board_size = size_row # Because board is always square so we can use board_size for both row and col
+        is_checked = False
+
+        # King count check
+        king_count = 0
+        for r in board_list:
+            king_count += r.count("K")
+
+        if (king_count == 1):
+            for r in range(board_size):
+                for c in range(board_size):
+                    if board_list[r][c] == "R":
+                        is_checked = is_rook_checking(board_list, r, c, board_size)
+                    elif board_list[r][c] == "B":
+                        is_checked = is_bishop_checking(board_list, r, c, board_size)
+                    elif board_list[r][c] == "Q":
+                        is_checked = is_queen_checking(board_list, r, c, board_size)
+                    elif board_list[r][c] == "P":
+                        is_checked = is_pawn_checking(board_list, r, c, board_size)
+                    if is_checked:
+                        print("Success")
+                        return
+            print("Failed")
+        else:
+            print("Error!")
+    else:
+        print("Error!")
 
 
 def is_rook_checking(board, row, col, board_size):
@@ -86,7 +107,7 @@ def check_after_move_to(board, start_r, start_c, step_r, step_c, board_size):
     while (r in range(0, board_size) and c in range(0, board_size)):
         if board[r][c] == "K":
             return True
-        elif board[r][c] != ".":
+        elif board[r][c] in ["R", "B", "Q", "P"]:
             break
         r += step_r
         c += step_c
