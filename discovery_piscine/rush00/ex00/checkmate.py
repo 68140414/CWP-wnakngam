@@ -6,11 +6,11 @@ def checkmate(board):
 
         # Check if Square
         size_row = len(board_list)
+        if size_row > 8:
+            return print("Error!")
         for r in board_list:
-            r = r.strip()
-            if len(r) != size_row:
-                print("Error!")
-                return
+            if len(r) != size_row or len(r) > 8:
+                return print("Error!")
 
         board_size = size_row # Because board is always square so we can use board_size for both row and col
         is_checked = False
@@ -31,6 +31,7 @@ def checkmate(board):
                         is_checked = is_queen_checking(board_list, r, c, board_size)
                     elif board_list[r][c] == "P":
                         is_checked = is_pawn_checking(board_list, r, c, board_size)
+                    
                     if is_checked:
                         print("Success")
                         return
@@ -43,6 +44,7 @@ def checkmate(board):
 
 def is_rook_checking(board, row, col, board_size):
     """Check if rook can check the king"""
+    
     # to N
     if check_after_move_to(board, row, col, -1, 0, board_size):
         return True
